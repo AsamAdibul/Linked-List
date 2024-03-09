@@ -24,13 +24,52 @@ void insertAtHead(Node *&head, int d)
     // Create New Node
     Node *temp = new Node(d);
 
-    temp->next = head;
-    head = temp;
+    temp->next = head; // pointing new nodes pointer to head
+    head = temp;       // making the new node head
+}
+
+void insertAtTail(Node *&tail, int d)
+{
+    // created a new node
+    Node *temp = new Node(d);
+    tail->next = temp; // tails next location points to temp
+    tail = temp;       // tail points to last node which is temp
+}
+
+void insertAtIndex(Node *&head, Node *&tail, int index, int d)
+{
+    Node *temp = head; // temporary variable for traversing
+    int cnt = 1;
+
+    // Inserting at 1st position
+    if (index == 1) // for adding to head and updating the value of head
+    {
+        insertAtHead(head, d);
+        return;
+    }
+
+    while (cnt < index - 1)
+    {
+        temp = temp->next;
+        cnt++;
+    }
+
+    // inserting at last position
+    if (temp->next == NULL) // if the position becomes tail we are uopdating the tail
+    {
+        insertAtTail(tail, d);
+        return;
+    }
+    // inserting in index
+    Node *nodeToInsert = new Node(d); // Creating the node that we will insert
+    nodeToInsert->next = temp->next;
+    temp->next = nodeToInsert;
 }
 
 void print(Node *&head)
 {
-    Node *temp = head;
+    // Creating a temp var for traversing
+    Node *temp = head; // pointing temp to head
     while (temp != NULL)
     {
         cout << temp->data << " ";
@@ -48,12 +87,28 @@ int main()
 
     // head pointed to node1
     Node *head = node1;
+    Node *tail = node1;
 
+    // Inserting at head
+    cout << "Inserting at head" << endl;
     insertAtHead(head, 12);
     print(head);
 
     insertAtHead(head, 100);
     print(head);
 
+    // Inserting at tail
+    cout << "Inserting at tail" << endl;
+    insertAtTail(tail, 99); // We have to pass tail as tail willbe the last node
+    insertAtTail(tail, 88);
+
+    print(head);
+
+    cout << "Inserting in Index 3" << endl;
+    insertAtIndex(head, tail, 6, 69);
+    print(head);
+
+    cout << "Head " << head->data << endl;
+    cout << "tail " << tail->data << endl;
     return 0;
 }
