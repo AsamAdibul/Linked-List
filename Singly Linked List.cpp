@@ -96,7 +96,7 @@ void deleteNode(int index, Node *&head)
         Node *curr = head;
         Node *prev = NULL;
         int cnt = 1;
-        while (cnt <= index)
+        while (cnt < index)
         {
             prev = curr;
             curr = curr->next; // Traversing to the position needed
@@ -154,7 +154,7 @@ int main()
     cout << "tail " << tail->data << endl;
 
     // deleteing Node
-    deleteNode(3, head);
+    deleteNode(4, head);
     print(head);
     return 0;
 }
