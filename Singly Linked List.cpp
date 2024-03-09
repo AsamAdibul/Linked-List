@@ -17,6 +17,18 @@ public:
         this->data = data;
         this->next = NULL;
     }
+    // destructor
+    ~Node()
+    {
+        int value = this->data;
+        // memory free
+        if (this->next != NULL)
+        {
+            delete next;
+            this->next = NULL;
+        }
+        cout << "Memory is free for node with data" << endl;
+    }
 };
 
 void insertAtHead(Node *&head, int d)
@@ -66,6 +78,36 @@ void insertAtIndex(Node *&head, Node *&tail, int index, int d)
     temp->next = nodeToInsert;
 }
 
+// deleting a node
+void deleteNode(int index, Node *&head)
+{
+    // deleting first node
+    if (index == 1)
+    {
+        Node *temp = head;
+        head = head->next;
+        // memory free
+        temp->next = NULL;
+        delete temp;
+    }
+    // deleting any other node
+    else
+    {
+        Node *curr = head;
+        Node *prev = NULL;
+        int cnt = 1;
+        while (cnt <= index)
+        {
+            prev = curr;
+            curr = curr->next; // Traversing to the position needed
+            cnt++;
+        }
+        prev->next = curr->next;
+        curr->next = NULL;
+        delete curr;
+    }
+}
+
 void print(Node *&head)
 {
     // Creating a temp var for traversing
@@ -110,5 +152,9 @@ int main()
 
     cout << "Head " << head->data << endl;
     cout << "tail " << tail->data << endl;
+
+    // deleteing Node
+    deleteNode(3, head);
+    print(head);
     return 0;
 }
